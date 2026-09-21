@@ -32,11 +32,27 @@
 a{color:inherit;text-decoration:none}.wrap{width:min(1120px,92%);margin:auto}
 header{position:sticky;top:0;z-index:20;background:rgba(11,12,14,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .nav{height:74px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}.brand img{width:42px;height:42px;object-fit:contain}.brand span{color:var(--accent)}
-nav{display:flex;gap:24px;color:var(--muted);font-size:.94rem}nav a:hover{color:#fff}
-.hero{padding:84px 0 54px;background:radial-gradient(circle at 70% 10%,rgba(255,145,0,.14),transparent 30%)}.eyebrow{color:var(--accent);font-size:.78rem;letter-spacing:2px;font-weight:800}.hero h1{font-size:clamp(2.4rem,7vw,5.6rem);line-height:1.02;margin:14px 0 18px;max-width:850px}.hero p{color:var(--muted);max-width:680px;font-size:1.05rem}.hero-actions{display:flex;gap:12px;margin-top:26px}.btn{border:1px solid var(--accent);background:var(--accent);color:#111;padding:12px 18px;border-radius:10px;font-weight:800;cursor:pointer}.btn.alt{background:transparent;color:#fff;border-color:var(--line)}
+nav{display:flex;gap:4px;color:var(--muted);font-size:.92rem}
+nav a{padding:9px 15px;border-radius:9px;font-weight:600;transition:color .2s,background .2s}
+nav a:hover{color:#fff;background:rgba(255,255,255,.05)}
+nav a.active{color:var(--accent);background:rgba(255,174,0,.1)}
+.hero{padding:84px 0 54px;background:radial-gradient(circle at 70% 10%,rgba(255,145,0,.14),transparent 30%)}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;color:var(--accent);font-size:.74rem;letter-spacing:1.5px;font-weight:800;padding:7px 16px;border:1px solid rgba(255,174,0,.35);border-radius:30px;background:rgba(255,174,0,.06)}
+.hero h1{font-size:clamp(2.4rem,7vw,5.6rem);line-height:1.02;margin:18px 0 18px;max-width:850px}
+.hero p{color:var(--muted);max-width:680px;font-size:1.05rem}
+.hero-actions{display:flex;gap:12px;margin-top:26px}
+.btn{border:1px solid var(--accent);background:var(--accent);color:#111;padding:12px 18px;border-radius:10px;font-weight:800;cursor:pointer;transition:transform .25s,box-shadow .25s}
+.btn:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(255,174,0,.32)}
+.btn.alt{background:transparent;color:#fff;border-color:var(--line)}
+.btn.alt:hover{border-color:var(--accent);color:var(--accent);background:rgba(255,174,0,.06)}
+.hero .eyebrow,.hero h1,.hero p,.hero-actions{opacity:0;animation:heroIn .8s ease forwards}
+.hero h1{animation-delay:.08s}.hero p{animation-delay:.16s}.hero-actions{animation-delay:.24s}
+@keyframes heroIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.hero-dot{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:.5;animation:dotFloat 6s ease-in-out infinite}
+@keyframes dotFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
 .section{padding:58px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:24px}.section h2{font-size:2rem;margin:0}.section-head p{color:var(--muted);margin:0}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:.25s;cursor:pointer}.card:hover{transform:translateY(-4px);border-color:#4b5059}.cover{aspect-ratio:4/5;overflow:hidden;background:#101114}.cover img{width:100%;height:100%;object-fit:cover;display:block}.card-body{padding:18px}.meta{color:var(--accent);font-size:.8rem;font-weight:800;letter-spacing:1px}.card h3{font-size:1.35rem;margin:6px 0}.card p{color:var(--muted);margin:0 0 16px}.view{background:none;border:0;color:#fff;font-weight:800;padding:0;cursor:pointer}.view:hover{color:var(--accent)}
-.info{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:28px}.info p{color:var(--muted);max-width:750px}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}.step{background:var(--panel2);padding:18px;border-radius:12px}.step b{color:var(--accent);font-size:1.5rem;display:block}
+.info{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:28px}.info p{color:var(--muted);max-width:750px}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}.step{background:var(--panel2);padding:18px;border-radius:12px;transition:.25s}.step:hover{transform:translateY(-3px);border:1px solid var(--accent)}.step b{color:var(--accent);font-size:1.5rem;display:block}
 footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:.9rem}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.76);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}.modal.open{display:flex}.modal-box{width:min(980px,100%);max-height:92vh;overflow:auto;background:#111317;border:1px solid #30343b;border-radius:18px;position:relative}.close{position:sticky;top:14px;float:right;margin:14px;background:#22262d;color:#fff;border:1px solid #3a3f47;width:40px;height:40px;border-radius:50%;font-size:1.2rem;cursor:pointer;z-index:2}.detail{padding:26px;clear:both}.detail h2{margin-top:0}.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:18px 0 26px}.gitem{display:flex;flex-direction:column;gap:8px}.gitem img{width:100%;border-radius:12px;display:block;aspect-ratio:4/5;object-fit:cover}.title-row{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}.title-row h2{margin:0}.pdfbtn{background:var(--accent);color:#111;border:none;padding:9px 16px;border-radius:20px;font-weight:800;cursor:pointer;font-size:.85rem;text-decoration:none;white-space:nowrap;box-shadow:0 4px 10px rgba(0,0,0,.3)}.gitem{position:relative}.prompt-box{background:#0b0c0e;border:1px solid var(--line);border-radius:12px;padding:18px;white-space:pre-wrap;color:#d9dce1;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88rem;max-height:420px;overflow:auto}.copy-row{display:flex;justify-content:space-between;align-items:center;margin:12px 0 0;gap:12px}.copy{border:1px solid var(--accent);background:var(--accent);padding:10px 15px;border-radius:9px;font-weight:800;cursor:pointer}
 @media(max-width:700px){nav{display:none}.hero{padding:64px 0 38px}.grid,.steps{grid-template-columns:1fr}.section-head{align-items:start;flex-direction:column}.gallery{grid-template-columns:1fr}.detail{padding:18px}}
@@ -128,11 +144,40 @@ footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-s
 .admin-status.err{display:block;background:rgba(255,90,90,.12);color:#ff6a6a;border:1px solid rgba(255,90,90,.35)}
 .admin-note{font-size:.78rem;color:var(--muted);margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
 
+
+/* ===== HOME / VIEWS / ANIMATIONS ===== */
+#viewPrompts{display:none}
+.hero{position:relative;overflow:hidden}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(90px);opacity:.30;z-index:0;pointer-events:none}
+.hero::before{width:380px;height:380px;background:var(--accent);top:-140px;right:-80px;animation:floatBlob 9s ease-in-out infinite}
+.hero::after{width:320px;height:320px;background:var(--accent2);bottom:-140px;left:-80px;animation:floatBlob 11s ease-in-out infinite reverse}
+@keyframes floatBlob{0%,100%{transform:translate(0,0)}50%{transform:translate(24px,26px)}}
+.hero .wrap{position:relative;z-index:1}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+.stats-bar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:8px 0 46px}
+.stat-box{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 12px;text-align:center;transition:.25s}
+.stat-box:hover{border-color:#4b5059;transform:translateY(-3px)}
+.stat-box b{font-size:2.1rem;color:var(--accent);display:block;font-weight:800}
+.stat-box span{color:var(--muted);font-size:.8rem;letter-spacing:.5px}
+.cat-preview-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+@media(max-width:900px){.cat-preview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats-bar{grid-template-columns:repeat(3,1fr)}}
+.cat-card{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/5;cursor:pointer;border:1px solid var(--line);background:#101114}
+.cat-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease,filter .5s ease;filter:brightness(.85)}
+.cat-card:hover img{transform:scale(1.08);filter:brightness(1)}
+.cat-card:hover{border-color:var(--accent)}
+.cat-card .overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.88),rgba(0,0,0,.05) 65%);display:flex;flex-direction:column;justify-content:flex-end;padding:16px}
+.cat-card h4{margin:0;font-size:1.02rem;font-weight:800}
+.cat-card span{color:var(--accent);font-size:.72rem;font-weight:800;letter-spacing:.5px;margin-top:2px}
+.prompts-head{padding:44px 0 10px}
+.back-home{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:.85rem;font-weight:700;cursor:pointer;margin-bottom:18px}
+.back-home:hover{color:var(--accent)}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
-<header><div class="wrap nav"><a class="brand" href="#"><img src="assets/logo.png" alt="Sajawal Creates logo">SAJAWAL <span>CREATES</span></a><nav><a href="#collections">Collections</a><a href="#order">Custom Order</a><a href="#about">About</a></nav></div></header>
+<header><div class="wrap nav"><a class="brand" href="#"><img src="assets/logo.png" alt="Sajawal Creates logo">SAJAWAL <span>CREATES</span></a><nav><a href="javascript:void(0)" id="navHome" class="active" onclick="showHome()">Home</a><a href="javascript:void(0)" id="navPrompts" onclick="showPromptsView()">Browse Prompts</a><a href="javascript:void(0)" onclick="showHome();setTimeout(()=>document.getElementById('order').scrollIntoView({behavior:'smooth'}),50)">Custom Order</a><a href="javascript:void(0)" onclick="showHome();setTimeout(()=>document.getElementById('about').scrollIntoView({behavior:'smooth'}),50)">About</a></nav></div></header>
 
 <div id="pageLoader"><img src="assets/logo.png" alt="Sajawal Creates"><div class="loader-bar"><div class="loader-fill"></div></div></div>
 
@@ -142,13 +187,27 @@ footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-s
 <button id="backTop" class="back-top" aria-label="Back to top">↑</button>
 
 <main>
-<section class="hero"><div class="wrap">
-<div class="eyebrow">CREATIVE PROMPTS • VISUAL COLLECTIONS</div>
+<section class="hero view-home">
+<span class="hero-dot" style="top:18%;left:8%;animation-delay:.2s"></span>
+<span class="hero-dot" style="top:65%;left:14%;animation-delay:1.4s"></span>
+<span class="hero-dot" style="top:30%;left:92%;animation-delay:.8s"></span>
+<span class="hero-dot" style="top:75%;left:85%;animation-delay:2s"></span>
+<span class="hero-dot" style="top:12%;left:60%;animation-delay:1s"></span>
+<div class="wrap">
+<div class="eyebrow">✦ CREATIVE PROMPTS &amp; VISUAL COLLECTIONS</div>
 <h1>Explore. Create.<br><span style="color:var(--accent)">Get Inspired.</span></h1>
 <p>A clean collection of creative AI prompts and the visuals created with them. Open a collection to view all images and copy the complete prompt.</p>
-<div class="hero-actions"><a class="btn" href="#collections">Explore Prompts</a><a class="btn alt" href="#order">Order Custom Art</a></div>
+<div class="hero-actions"><a class="btn" href="javascript:void(0)" onclick="showPromptsView()">Explore Prompts</a><a class="btn alt" href="#order">Order Custom Art</a></div>
 </div></section>
 
+<section class="section view-home" id="explore"><div class="wrap">
+<div class="section-head reveal"><div><div class="eyebrow">BROWSE BY STYLE</div><h2>Explore Categories</h2></div><p>Pick a style to see matching prompts</p></div>
+<div class="stats-bar reveal" id="statsBar"></div>
+<div class="cat-preview-grid" id="catPreviewGrid"></div>
+</div></section>
+
+<div id="viewPrompts">
+<div class="wrap"><span class="back-home" onclick="showHome()">← Back to Home</span></div>
 <section class="section" id="collections"><div class="wrap">
 <div class="section-head"><div><div class="eyebrow">PROMPT LIBRARY</div><h2>Featured Collections</h2></div><p id="resultCount">48 prompts available</p></div>
 <div class="filterbar">
@@ -159,19 +218,20 @@ footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-s
 <div class="grid" id="cards"></div>
 <p id="noResults" style="display:none;color:var(--muted);text-align:center;padding:40px 0">No prompts match your search — try a different keyword or category.</p>
 </div></section>
+</div><!-- /viewPrompts -->
 
-<section class="section" id="order"><div class="wrap order-cta">
+<section class="section view-home" id="order"><div class="wrap order-cta reveal">
 <div class="eyebrow">CUSTOM WORK</div>
 <h2>Want a prompt made just for you?</h2>
 <p>Tell us the vibe, the outfit, the setting — we'll craft a custom AI art prompt (or the final generated visuals) tailored exactly to what you need.</p>
 <div class="hero-actions"><a class="btn" href="https://wa.me/923039107200?text=Hi%2C%20I%27d%20like%20to%20order%20a%20custom%20AI%20art%20prompt." target="_blank" rel="noopener">💬 Message on WhatsApp</a><a class="btn alt" href="mailto:mywork7200@gmail.com">✉ Email Us</a></div>
 </div></section>
 
-<section class="section" id="about"><div class="wrap info">
+<section class="section view-home" id="about"><div class="wrap info reveal">
 <div class="eyebrow">SIMPLE & USER-FRIENDLY</div>
 <h2>How the collections work</h2>
 <p>Each collection can contain one image or multiple images. Visitors simply open the collection, browse the visuals, and copy the complete prompt with one click.</p>
-<div class="steps"><div class="step"><b>01</b>Choose a collection</div><div class="step"><b>02</b>View the images</div><div class="step"><b>03</b>Copy the prompt</div></div>
+<div class="steps"><div class="step reveal"><b>01</b>Choose a collection</div><div class="step reveal" style="transition-delay:.1s"><b>02</b>View the images</div><div class="step reveal" style="transition-delay:.2s"><b>03</b>Copy the prompt</div></div>
 <div class="contact-row"><div><div class="eyebrow">GET IN TOUCH</div><p style="margin:6px 0 0">Questions, custom orders, or collaborations — reach out anytime.</p></div><div class="contact-links"><a href="https://wa.me/923039107200" target="_blank" rel="noopener">📱 0303 9107200</a><a href="mailto:mywork7200@gmail.com">✉ mywork7200@gmail.com</a></div></div>
 </div></section>
 </main>
@@ -283,6 +343,50 @@ function renderCatPanel(){
 function selectCat(c){activeCat=c;renderCatPanel();applyFilters();if(c)document.getElementById("collections").scrollIntoView({behavior:"smooth"})}
 catToggle.onclick=()=>{catPanel.classList.toggle("open");catToggle.classList.toggle("active")};
 renderCatPanel();
+
+/* ===== VIEW SWITCHING (Home <-> All Prompts) ===== */
+const homeEls = document.querySelectorAll('.view-home');
+const promptsView = document.getElementById('viewPrompts');
+function showHome(){
+  homeEls.forEach(el=>el.style.display='');
+  promptsView.style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+  document.getElementById('navHome').classList.add('active');
+  document.getElementById('navPrompts').classList.remove('active');
+}
+function showPromptsView(cat){
+  homeEls.forEach(el=>el.style.display='none');
+  promptsView.style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  document.getElementById('navPrompts').classList.add('active');
+  document.getElementById('navHome').classList.remove('active');
+  if(cat!==undefined) selectCat(cat);
+}
+
+/* ===== SCROLL REVEAL ANIMATION ===== */
+const revealObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); revealObserver.unobserve(e.target); } });
+},{threshold:.15});
+function setupReveal(){
+  document.querySelectorAll('.reveal:not(.observed)').forEach(el=>{ el.classList.add('observed'); revealObserver.observe(el); });
+}
+
+/* ===== CATEGORY PREVIEW CARDS (Home page) ===== */
+function renderCategoryPreview(){
+  const counts={};
+  prompts.forEach(p=>counts[p.cat]=(counts[p.cat]||0)+1);
+  const thumbs={};
+  sortedPrompts.forEach(p=>{ if(!thumbs[p.cat]) thumbs[p.cat]=p.images[0]; });
+  const grid=document.getElementById('catPreviewGrid');
+  grid.innerHTML = categories.map((c,i)=>`<div class="cat-card reveal" style="transition-delay:${i*0.05}s" onclick="showPromptsView('${c.replace(/'/g,"\\'")}')"><img src="${thumbs[c]||''}" alt="${escapeHtml(c)}" loading="lazy"><div class="overlay"><h4>${escapeHtml(c)}</h4><span>${counts[c]} PROMPTS</span></div></div>`).join('');
+  document.getElementById('statsBar').innerHTML =
+    `<div class="stat-box reveal"><b>${prompts.length}+</b><span>AI PROMPTS</span></div>`+
+    `<div class="stat-box reveal" style="transition-delay:.08s"><b>${categories.length}</b><span>CATEGORIES</span></div>`+
+    `<div class="stat-box reveal" style="transition-delay:.16s"><b>100%</b><span>READY TO USE</span></div>`;
+  setupReveal();
+}
+renderCategoryPreview();
+setupReveal();
 
 let currentPrompt=null;
 function escapeHtml(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
