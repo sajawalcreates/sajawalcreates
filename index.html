@@ -175,6 +175,14 @@ footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-s
 
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BBPRLPYG2K"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-BBPRLPYG2K');
+</script>
 </head>
 <body>
 <header><div class="wrap nav"><a class="brand" href="#"><img src="assets/logo.png" alt="Sajawal Creates logo">SAJAWAL <span>CREATES</span></a><nav><a href="javascript:void(0)" id="navHome" class="active" onclick="showHome()">Home</a><a href="javascript:void(0)" id="navPrompts" onclick="showPromptsView()">Browse Prompts</a><a href="javascript:void(0)" onclick="showHome();setTimeout(()=>document.getElementById('order').scrollIntoView({behavior:'smooth'}),50)">Custom Order</a><a href="javascript:void(0)" onclick="showHome();setTimeout(()=>document.getElementById('about').scrollIntoView({behavior:'smooth'}),50)">About</a></nav></div></header>
