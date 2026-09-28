@@ -427,20 +427,41 @@ const homeEls = document.querySelectorAll('.view-home');
 const promptsView = document.getElementById('viewPrompts');
 function toggleMobileMenu(){document.getElementById("mainNav").classList.toggle("mobile-open")}
 function closeMobileMenu(){document.getElementById("mainNav").classList.remove("mobile-open")}
+/* ===== VIEW + BACK-BUTTON (History API) ===== */
+let currentView='home';
+function _base(){return location.href.split('#')[0]}
+function _push(state,hash,y){
+  try{
+    const cur=history.state||{v:currentView};
+    history.replaceState(Object.assign({},cur,{y:(typeof y==='number'?y:window.scrollY)}),'');
+    history.pushState(state,'',_base()+hash);
+  }catch(e){}
+}
+function _applyView(v,opts){
+  opts=opts||{};
+  const navH=document.getElementById('navHome'), navP=document.getElementById('navPrompts');
+  if(v==='prompts'){
+    homeEls.forEach(el=>el.style.display='none');
+    promptsView.style.display='block';
+    navP.classList.add('active'); navH.classList.remove('active');
+  }else{
+    homeEls.forEach(el=>el.style.display='');
+    promptsView.style.display='none';
+    navH.classList.add('active'); navP.classList.remove('active');
+  }
+  currentView=v;
+  if(!opts.keepScroll) window.scrollTo({top:0,behavior:'smooth'});
+}
 function showHome(){
-  homeEls.forEach(el=>el.style.display='');
-  promptsView.style.display='none';
-  window.scrollTo({top:0,behavior:'smooth'});
-  document.getElementById('navHome').classList.add('active');
-  document.getElementById('navPrompts').classList.remove('active');
+  const was=currentView, y=window.scrollY;
+  _applyView('home');
+  if(was!=='home') _push({v:'home'},'',y);
 }
 function showPromptsView(cat){
-  homeEls.forEach(el=>el.style.display='none');
-  promptsView.style.display='block';
-  window.scrollTo({top:0,behavior:'smooth'});
-  document.getElementById('navPrompts').classList.add('active');
-  document.getElementById('navHome').classList.remove('active');
+  const was=currentView, y=window.scrollY;
+  _applyView('prompts');
   if(cat!==undefined) selectCat(cat);
+  if(was!=='prompts') _push({v:'prompts'},'#prompts',y);
 }
 
 /* ===== SCROLL REVEAL ANIMATION ===== */
@@ -470,9 +491,46 @@ setupReveal();
 
 let currentPrompt=null;
 function escapeHtml(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
-function openPrompt(id){const p=prompts.find(x=>x.id===id);currentPrompt=p;detailMeta.textContent=p.meta;detailTitle.textContent=p.title;const pdfBtn=document.getElementById("pdfBtn");pdfBtn.href=p.pdf;pdfBtn.removeAttribute("download");gallery.innerHTML=p.images.map((img)=>`<div class="gitem"><div class="cover" style="aspect-ratio:4/5;border-radius:12px"><img src="${img}" alt="${escapeHtml(p.title)}" style="border-radius:12px" onload="this.classList.add('loaded');this.parentElement.classList.add('done')"></div></div>`).join("");modal.classList.add("open");document.body.style.overflow="hidden"}
-function closePrompt(){modal.classList.remove("open");document.body.style.overflow=""}
+function _showPrompt(id){const p=prompts.find(x=>x.id===id);currentPrompt=p;detailMeta.textContent=p.meta;detailTitle.textContent=p.title;const pdfBtn=document.getElementById("pdfBtn");pdfBtn.href=p.pdf;pdfBtn.removeAttribute("download");gallery.innerHTML=p.images.map((img)=>`<div class="gitem"><div class="cover" style="aspect-ratio:4/5;border-radius:12px"><img src="${img}" alt="${escapeHtml(p.title)}" style="border-radius:12px" onload="this.classList.add('loaded');this.parentElement.classList.add('done')"></div></div>`).join("");modal.classList.add("open");document.body.style.overflow="hidden"}
+function _hideModal(){modal.classList.remove("open");document.body.style.overflow=""}
+function openPrompt(id){
+  const y=window.scrollY;
+  _showPrompt(id);
+  if(!(history.state&&history.state.v==="modal")) _push({v:"modal",id:id},"#prompt-"+id,y);
+}
+function closePrompt(){
+  if(modal.classList.contains("open")&&history.state&&history.state.v==="modal"){ history.back(); }
+  else _hideModal();
+}
 document.getElementById("close").onclick=closePrompt;modal.onclick=e=>{if(e.target===modal)closePrompt()};document.addEventListener("keydown",e=>{if(e.key==="Escape")closePrompt()});
+
+window.addEventListener("popstate",function(e){
+  const s=e.state||{v:"home"};
+  if(s.v==="modal"){
+    if(currentView!=="prompts") _applyView("prompts",{keepScroll:true});
+    if(prompts.find(x=>x.id===s.id)) _showPrompt(s.id);
+  }else{
+    _hideModal();
+    const target=(s.v==="prompts")?"prompts":"home";
+    if(currentView!==target) _applyView(target,{keepScroll:true});
+    if(e.state&&typeof e.state.y==="number") window.scrollTo({top:e.state.y,behavior:"instant"});
+  }
+});
+(function initHistory(){
+  try{
+    if("scrollRestoration" in history) history.scrollRestoration="manual";
+    const h=location.hash, m=h.match(/^#prompt-(\d+)$/);
+    history.replaceState({v:"home"},"",_base());
+    if(h==="#prompts"||m){
+      _applyView("prompts",{keepScroll:true});
+      history.pushState({v:"prompts"},"",_base()+"#prompts");
+      if(m&&prompts.find(x=>x.id===+m[1])){
+        _showPrompt(+m[1]);
+        history.pushState({v:"modal",id:+m[1]},"",_base()+"#prompt-"+m[1]);
+      }
+    }
+  }catch(err){}
+})();
 document.getElementById("year").textContent=new Date().getFullYear();
 
 /* page loader */
@@ -484,7 +542,7 @@ window.addEventListener("scroll",()=>{backTop.classList.toggle("show",window.scr
 backTop.onclick=()=>window.scrollTo({top:0,behavior:"smooth"});
 
 /* ===== ADMIN PANEL LOGIC ===== */
-const ADMIN_PASSWORD = "sajawal2026"; // <-- ISE BADAL DEIN apni pasand ke password se
+const ADMIN_PASSWORD = "SCKHI#14"; // <-- ISE BADAL DEIN apni pasand ke password se
 
 let footerClicks = 0, footerClickTimer = null;
 function footerClick(){
@@ -665,16 +723,30 @@ function saveAdminEntry(){
   showAdminStatus('Prompt #' + id + ' save ho gaya. Ab "Update Download Karein" dabayein.');
 }
 
+
+function _cleanSnapshot(){
+  const root=document.documentElement.cloneNode(true);
+  const $=id=>root.querySelector('#'+id);
+  const rm=(el,cls)=>{if(el)el.classList.remove(cls)};
+  rm($('modal'),'open'); rm($('adminOverlay'),'show'); rm($('pageLoader'),'hide'); rm($('mainNav'),'mobile-open');
+  rm($('catPanel'),'open'); rm($('catToggle'),'active'); rm($('backTop'),'show'); rm($('navPrompts'),'active');
+  if($('navHome')) $('navHome').classList.add('active');
+  if($('adminDash')) $('adminDash').setAttribute('style','display:none');
+  if($('adminLoginBox')) $('adminLoginBox').removeAttribute('style');
+  if($('viewPrompts')) $('viewPrompts').removeAttribute('style');
+  root.querySelectorAll('.view-home').forEach(e=>e.removeAttribute('style'));
+  const body=root.querySelector('body'); if(body) body.removeAttribute('style');
+  ['cards','catPanel','catPreviewGrid','statsBar','gallery','adminList','af_imagePreview'].forEach(id=>{const e=$(id); if(e) e.innerHTML='';});
+  if($('detailMeta')) $('detailMeta').textContent='';
+  if($('detailTitle')) $('detailTitle').textContent='';
+  if($('pdfBtn')) $('pdfBtn').removeAttribute('href');
+  root.querySelectorAll('.reveal').forEach(e=>{e.classList.remove('observed');e.classList.remove('in')});
+  return '<!DOCTYPE html>\n'+root.outerHTML;
+}
+
 function downloadUpdate(){
   if(typeof JSZip === 'undefined'){ showAdminStatus('ZIP library load nahi hui — internet connection check karein.', false); return; }
-  closePrompt();
-  document.getElementById('catPanel').classList.remove('open');
-  document.getElementById('catToggle').classList.remove('active');
-  document.getElementById('adminOverlay').classList.remove('show');
-
-  const htmlStr = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-
-  document.getElementById('adminOverlay').classList.add('show');
+  const htmlStr = _cleanSnapshot();
 
   const zip = new JSZip();
   zip.file('index.html', htmlStr);
